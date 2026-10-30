@@ -1,0 +1,14 @@
+{
+  "name": "had-media-website",
+  "version": "1.0.0",
+  "description": "HAD Media - Social media management agency website",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'",
+    "lint": "echo 'No linting configured'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
