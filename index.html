@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HAD Media · Social media management agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        --x-ink: #0e0e0e;
+        --x-bone: #ece6de;
+        --x-bronze: #8a7560;
+        --x-bronze-light: #b59c82;
+        --x-line-dark: rgb(236 230 222 / 0.16);
+        --x-line-cream: rgb(14 14 14 / 0.14);
+        --x-serif: "Instrument Serif", Georgia, serif;
+        --x-max: 1200px;
+        --x-pad: clamp(20px, 5vw, 64px);
+      }
+      body.x-body { background: var(--x-ink); color: var(--x-bone); font-family: var(--sans); }
+      .x-body :focus-visible { outline-color: var(--x-bronze-light); }
+
+      /* nav */
+      .x-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; border-bottom: 1px solid transparent; }
+      .x-nav.is-scrolled { background: var(--x-ink); border-bottom-color: var(--x-line-dark); }
+      .x-nav.is-cream { color: var(--x-ink); }
+      .x-nav.is-cream.is-scrolled { background: var(--x-bone); border-bottom-color: var(--x-line-cream); }
+      .x-nav__in { max-width: var(--x-max); margin: 0 auto; padding: 14px var(--x-pad); display: flex; align-items: center; gap: 24px; }
+      .x-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-height: var(--tap); }
+      .x-brand svg { width: 34px; height: 36px; flex: none; display: block; }
+      .x-brand span { font: var(--weight-medium) 13px/1 var(--sans); letter-spacing: 0.28em; }
+      .x-nav__links { display: flex; gap: 4px; margin-left: auto; list-style: none; padding: 0; margin-block: 0; }
+      .x-nav__links a { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 14px; text-decoration: none; font: var(--type-small); opacity: 0.72; transition: opacity var(--dur-quick); }
+      .x-nav__links a:hover, .x-nav__links a[aria-current="page"] { opacity: 1; }
+      .x-nav__links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+      .x-burger { display: none; margin-left: auto; width: var(--tap); height: var(--tap); border: 0; background: none; color: inherit; cursor: pointer; padding: 0; }
+      .x-burger span { display: block; width: 22px; height: 1.5px; background: currentColor; margin: 6px auto; transition: transform var(--dur-quick) var(--ease-out), opacity var(--dur-quick); }
+      .x-nav.is-open .x-burger span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+      .x-nav.is-open .x-burger span:nth-child(2) { opacity: 0; }
+      .x-nav.is-open .x-burger span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+      /* buttons */
+      .x-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: var(--tap); padding: 0 22px; border-radius: var(--r-pill); font: var(--weight-medium) 14px/1 var(--sans); text-decoration: none; border: 1px solid currentColor; background: none; color: inherit; cursor: pointer; transition: background var(--dur-quick) var(--ease-out), color var(--dur-quick) var(--ease-out), border-color var(--dur-quick); }
+      .x-btn--solid { background: var(--x-bone); color: var(--x-ink); border-color: var(--x-bone); }
+      .x-btn--solid:hover { background: var(--x-bronze-light); border-color: var(--x-bronze-light); }
+      .x-cream .x-btn--solid, .x-nav.is-cream .x-btn--solid { background: var(--x-ink); color: var(--x-bone); border-color: var(--x-ink); }
+      .x-cream .x-btn--solid:hover, .x-nav.is-cream .x-btn--solid:hover { background: var(--x-bronze); border-color: var(--x-bronze); }
+      .x-btn--ghost:hover { background: rgb(236 230 222 / 0.1); }
+      .x-cream .x-btn--ghost:hover { background: rgb(14 14 14 / 0.06); }
+      .x-btn--sm { min-height: var(--tap); padding: 0 18px; font-size: 13px; }
+      .x-arrow { text-decoration: none; font: var(--weight-regular) clamp(18px, 2vw, 22px)/1.3 var(--sans); border-bottom: 1px solid currentColor; padding-bottom: 4px; display: inline-flex; min-height: var(--tap); align-items: center; }
+      .x-arrow:hover { color: var(--x-bronze-light); }
+      .x-cream .x-arrow:hover { color: var(--x-bronze); }
+
+      /* views */
+      .x-view { animation: x-fade 520ms var(--ease-out); }
+      .x-view[hidden] { display: none; }
+      @keyframes x-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+      @media (prefers-reduced-motion: reduce) { .x-view { animation: none; } }
+
+      /* sections */
+      .x-sec { padding: clamp(72px, 10vw, 128px) var(--x-pad); position: relative; }
+      .x-sec + .x-sec.x-dark, .x-dark + .x-dark { border-top: 1px solid var(--x-line-dark); }
+      .x-in { max-width: var(--x-max); margin: 0 auto; }
+      .x-dark { background: var(--x-ink); color: var(--x-bone); }
+      .x-cream { background: var(--x-bone); color: var(--x-ink); }
+      .x-label { font: var(--weight-medium) 12px/1.3 var(--sans); letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.7; margin-bottom: 20px; }
+      .x-h1 { font: var(--weight-light) clamp(40px, 7vw, 88px)/1.02 var(--sans); letter-spacing: -0.03em; }
+      .x-h2 { font: var(--weight-light) clamp(32px, 4.6vw, 60px)/1.06 var(--sans); letter-spacing: -0.025em; }
+      .x-h3 { font: var(--weight-regular) 20px/1.3 var(--sans); letter-spacing: -0.01em; }
+      .x-em { font-family: var(--x-serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
+      .x-hi { color: var(--x-bronze-light); }
+      .x-cream .x-hi { color: var(--x-bronze); }
+      .x-lede { font: var(--weight-regular) clamp(16px, 1.5vw, 19px)/1.55 var(--sans); opacity: 0.78; max-width: 60ch; }
+      .x-center { text-align: center; }
+      .x-center .x-lede { margin-inline: auto; }
+      .x-stack > * + * { margin-top: 24px; }
+
+      /* hero */
+      .x-hero { min-height: 100svh; display: flex; align-items: flex-end; padding: 140px var(--x-pad) clamp(56px, 8vw, 96px); position: relative; overflow: hidden; background: var(--x-ink); color: var(--x-bone); }
+      .x-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .x-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(14 14 14 / 0.55) 0%, rgb(14 14 14 / 0.25) 40%, rgb(14 14 14 / 0.88) 100%); }
+      .x-hero .x-in { position: relative; z-index: 1; width: 100%; }
+      .x-hero--page { min-height: 72svh; }
+      .x-hero--cream { background: var(--x-bone); color: var(--x-ink); }
+      .x-hero--cream::after { background: linear-gradient(90deg, rgb(236 230 222 / 0.97) 0%, rgb(236 230 222 / 0.9) 50%, rgb(236 230 222 / 0.35) 100%); }
+      .x-btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+      /* VSL */
+      .x-video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-l); overflow: hidden; background: var(--x-ink); margin: 48px auto 0; max-width: 1040px; box-shadow: 0 30px 80px rgb(14 14 14 / 0.25); }
+      .x-video img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+      .x-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+      .x-play { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 18px; background: none; border: 0; color: var(--x-bone); cursor: pointer; font: var(--type-label); letter-spacing: 0.18em; text-transform: uppercase; }
+      .x-play__ring { width: clamp(72px, 10vw, 104px); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgb(236 230 222 / 0.6); display: grid; place-items: center; background: rgb(236 230 222 / 0.08); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: transform var(--dur-quick) var(--ease-out), background var(--dur-quick); }
+      .x-play:hover .x-play__ring { transform: scale(1.06); background: rgb(236 230 222 / 0.18); }
+      .x-play[disabled] { cursor: default; }
+      .x-poster { position: absolute; inset: 0; display: block; color: var(--x-bone); text-decoration: none; }
+      .x-poster img { position: absolute; inset: 0; filter: none; transition: transform 600ms var(--ease-out); }
+      .x-poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(14 14 14 / 0.15) 0%, rgb(14 14 14 / 0.35) 55%, rgb(14 14 14 / 0.75) 100%); }
+      .x-poster__in { position: absolute; inset: 0; z-index: 1; display: grid; place-content: center; justify-items: center; gap: 18px; }
+      .x-poster__btn { width: clamp(72px, 11vw, 112px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: var(--x-bone); color: var(--x-bronze); box-shadow: 0 12px 40px rgb(14 14 14 / 0.35), 0 0 0 8px rgb(236 230 222 / 0.18); transition: transform var(--dur-quick) var(--ease-out), background var(--dur-quick); }
+      .x-poster__btn svg { width: 38%; height: 38%; margin-left: 8%; }
+      .x-poster__title { font: var(--type-label); letter-spacing: 0.18em; text-transform: uppercase; text-shadow: 0 1px 12px rgb(14 14 14 / 0.6); }
+      .x-poster:hover .x-poster__btn, .x-poster:focus-visible .x-poster__btn { transform: scale(1.06); background: var(--x-bronze-light); color: var(--x-ink); }
+      .x-poster:hover img { transform: scale(1.02); }
+      .x-vsl-cta { margin-top: 40px; }
+      .x-vsl-yt { margin-top: 12px; font: var(--type-small); }
+      .x-vsl-yt a { display: inline-flex; align-items: center; min-height: var(--tap); color: inherit; opacity: 0.75; text-decoration: underline; text-underline-offset: 3px; }
+      .x-vsl-yt a:hover { opacity: 1; }
+
+      /* platforms */
+      .x-plat { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--x-line-dark); border-bottom: 1px solid var(--x-line-dark); margin-top: 8px; }
+      .x-plat li { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 32px 12px; font: var(--weight-light) clamp(16px, 2vw, 22px)/1 var(--sans); }
+      .x-plat li + li { border-left: 1px solid var(--x-line-dark); }
+      .x-plat svg { width: 26px; height: 26px; flex: none; }
+      .x-plat-sec { padding-block: clamp(48px, 7vw, 80px); }
+
+      /* about / split */
+      .x-split { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
+      .x-photo { border-radius: var(--r-l); overflow: hidden; aspect-ratio: 4 / 5; }
+      .x-photo img { width: 100%; height: 100%; object-fit: cover; }
+      .x-trio { display: flex; flex-wrap: wrap; gap: 8px 28px; padding-top: 24px; border-top: 1px solid var(--x-line-dark); font: var(--weight-regular) 15px/1.3 var(--sans); }
+      .x-trio span::before { content: "— "; color: var(--x-bronze-light); }
+
+      /* before / after */
+      .x-ba { display: grid; grid-template-columns: 1fr 1fr; margin-top: 56px; border: 1px solid var(--x-line-dark); border-radius: var(--r-l); overflow: hidden; }
+      .x-ba > div { padding: clamp(28px, 4vw, 48px); }
+      .x-ba > div + div { border-left: 1px solid var(--x-line-dark); background: #181716; }
+      .x-ba ul { list-style: none; padding: 0; margin: 24px 0 0; }
+      .x-ba li { display: flex; gap: 14px; align-items: center; padding: 16px 0; border-top: 1px solid var(--x-line-dark); font: var(--weight-light) clamp(18px, 2vw, 24px)/1.25 var(--sans); }
+      .x-ba li svg { width: 18px; height: 18px; flex: none; }
+      .x-ba .is-before li { opacity: 0.55; }
+      .x-ba .is-after li svg { color: var(--x-bronze-light); }
+
+      /* case study */
+      .x-stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 56px; border-top: 1px solid var(--x-line-cream); }
+      .x-stats div { padding: 32px 24px 0 0; }
+      .x-stats div + div { border-left: 1px solid var(--x-line-cream); padding-left: 24px; }
+      .x-stats b { display: block; font: var(--weight-light) clamp(44px, 7vw, 88px)/1 var(--sans); letter-spacing: -0.03em; color: var(--x-bronze); }
+      .x-stats span { display: block; margin-top: 10px; font: var(--weight-medium) 12px/1.3 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; }
+      .x-stats b, .x-results b { font-variant-numeric: tabular-nums; }
+
+      /* marquee */
+      .x-marquee { background: var(--x-ink); color: var(--x-bone); border-block: 1px solid var(--x-line-dark); overflow: hidden; padding: 22px 0; }
+      .x-marquee__track { display: flex; width: max-content; animation: x-marquee 60s linear infinite; }
+      .x-marquee__track p { flex: none; padding-right: 0.6em; font: var(--weight-regular) 13px/1 var(--sans); letter-spacing: 0.42em; white-space: nowrap; }
+      @keyframes x-marquee { to { transform: translateX(-50%); } }
+
+      /* results strip */
+      .x-results { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 56px; border-top: 1px solid var(--x-line-dark); }
+      .x-results > div { padding: 32px 24px 0 0; }
+      .x-results > div + div { border-left: 1px solid var(--x-line-dark); padding-left: 24px; }
+      .x-results b { display: block; font: var(--weight-light) clamp(40px, 5.6vw, 72px)/1 var(--sans); letter-spacing: -0.03em; color: var(--x-bronze-light); }
+      .x-results span { display: block; margin-top: 12px; font: var(--weight-medium) 12px/1.3 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.75; }
+
+      /* scroll reveal */
+      .x-js .x-rv { opacity: 0; translate: 0 18px; transition: opacity 700ms var(--ease-out), translate 700ms var(--ease-out); }
+      .x-js .x-rv.is-in { opacity: 1; translate: 0 0; }
+      .x-js .x-card.x-rv { transition: transform 280ms var(--ease-out), border-color 280ms, background 280ms, opacity 700ms var(--ease-out), translate 700ms var(--ease-out); }
+
+      /* floating book pill (mobile) */
+      .x-fab { display: none; position: fixed; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 40; background: var(--x-bronze-light); color: var(--x-ink); border-color: var(--x-bronze-light); box-shadow: 0 10px 30px rgb(14 14 14 / 0.35); }
+      .x-fab:hover { background: var(--x-bone); border-color: var(--x-bone); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-marquee__track { animation: none; }
+        .x-js .x-rv { opacity: 1; translate: none; transition: none; }
+      }
+
+      /* quote / testimonial */
+      .x-quote { font: var(--weight-light) clamp(28px, 4vw, 52px)/1.15 var(--sans); letter-spacing: -0.02em; max-width: 22ch; margin: 0 auto; }
+      .x-testi { max-width: 880px; margin: 0 auto; padding: clamp(32px, 5vw, 64px); border-radius: var(--r-xl); border: 1px solid var(--x-line-dark); background: #181716; }
+      .x-testi blockquote { margin: 0; font: var(--weight-light) clamp(22px, 2.8vw, 34px)/1.3 var(--sans); letter-spacing: -0.01em; }
+      .x-testi figcaption { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--x-line-dark); font: var(--type-small); opacity: 0.75; }
+      .x-mark { font: 400 80px/0.6 var(--x-serif); color: var(--x-bronze-light); display: block; height: 40px; }
+      .x-cream .x-mark { color: var(--x-bronze); }
+
+      /* services grid */
+      .x-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+      .x-card { position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 32px; border-radius: var(--r-l); border: 1px solid var(--x-line-dark); background: #141413; transition: transform 280ms var(--ease-out), border-color 280ms, background 280ms, opacity 700ms var(--ease-out), translate 700ms var(--ease-out); }
+      .x-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--x-bronze-light); transform: scaleX(0.12); transform-origin: left; transition: transform 480ms var(--ease-out); }
+      .x-card:hover::before, .x-card:focus-within::before { transform: scaleX(1); }
+      .x-card__top { display: flex; justify-content: space-between; align-items: flex-start; }
+      .x-more { margin-top: auto; padding-top: 20px; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: var(--tap); text-decoration: none; font: var(--weight-medium) 13px/1 var(--sans); letter-spacing: 0.04em; color: var(--x-bronze-light); }
+      .x-more span { transition: transform var(--dur-quick) var(--ease-out); }
+      .x-more:hover span, .x-card:hover .x-more span { transform: translateX(4px); }
+      .x-card:hover { transform: translateY(-6px); border-color: rgb(181 156 130 / 0.6); background: #1b1a18; }
+      @media (prefers-reduced-motion: reduce) { .x-card:hover { transform: none; } }
+      .x-card svg { width: 32px; height: 32px; color: var(--x-bronze-light); margin-bottom: 40px; }
+      .x-card p { margin-top: 10px; font: var(--weight-regular) 15px/1.5 var(--sans); opacity: 0.68; }
+      .x-card__n { position: absolute; top: 32px; right: 32px; font: var(--weight-regular) 12px/1 "Geist Mono", monospace; opacity: 0.45; }
+
+      /* process: typographic numbered layout */
+      .x-steps { list-style: none; padding: 0; margin: 56px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--x-line-cream); }
+      .x-steps li { padding: 32px 24px 8px 0; }
+      .x-steps li + li { border-left: 1px solid var(--x-line-cream); padding-left: 24px; }
+      .x-steps b { display: block; font: 400 clamp(64px, 8vw, 112px)/0.9 var(--x-serif); font-style: italic; color: var(--x-bronze); margin-bottom: 28px; }
+      .x-steps h3 { font: var(--weight-regular) clamp(22px, 2.4vw, 28px)/1.2 var(--sans); letter-spacing: -0.01em; }
+      .x-steps p { margin-top: 6px; opacity: 0.68; font: var(--weight-regular) 15px/1.5 var(--sans); }
+
+      /* stop doing */
+      .x-stop { list-style: none; padding: 0; margin: 48px 0 0; }
+      .x-stop li { display: flex; gap: 20px; align-items: baseline; padding: 28px 0; border-top: 1px solid var(--x-line-dark); font: var(--weight-light) clamp(22px, 3.4vw, 40px)/1.15 var(--sans); letter-spacing: -0.015em; }
+      .x-stop li:last-child { border-bottom: 1px solid var(--x-line-dark); }
+      .x-stop li span { color: var(--x-bronze-light); font-weight: 300; flex: none; }
+
+      /* band */
+      .x-band { position: relative; overflow: hidden; padding: clamp(96px, 14vw, 180px) var(--x-pad); background: var(--x-ink); color: var(--x-bone); text-align: center; }
+      .x-band > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); }
+      .x-band .x-in { position: relative; }
+
+      /* booking */
+      .x-book { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+      .x-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: clamp(24px, 4vw, 48px); border-radius: var(--r-l); background: #f5f1eb; border: 1px solid var(--x-line-cream); }
+      .x-field { display: grid; gap: 8px; }
+      .x-field--full { grid-column: 1 / -1; }
+      .x-field > label, .x-field legend { font: var(--weight-medium) 12px/1.3 var(--sans); letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; padding: 0; }
+      .x-field fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+      .x-input { width: 100%; min-height: 48px; padding: 12px 14px; border-radius: var(--r-s); border: 1px solid var(--x-line-cream); background: var(--x-bone); color: var(--x-ink); font: var(--weight-regular) 16px/1.3 var(--sans); }
+      .x-input:focus { outline: none; border-color: var(--x-bronze); box-shadow: 0 0 0 3px rgb(138 117 96 / 0.2); }
+      textarea.x-input { min-height: 120px; resize: vertical; }
+      .x-checks { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-check { position: relative; }
+      .x-check input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+      .x-check span { display: inline-flex; align-items: center; min-height: var(--tap); padding: 0 18px; border-radius: var(--r-pill); border: 1px solid var(--x-line-cream); font: var(--type-small); transition: background var(--dur-quick), color var(--dur-quick); }
+      .x-check input:checked + span { background: var(--x-ink); color: var(--x-bone); border-color: var(--x-ink); }
+      .x-check input:focus-visible + span { outline: 2px solid var(--x-bronze); outline-offset: 2px; }
+      .x-form__foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+      .x-small { font: var(--weight-regular) 13px/1.5 var(--sans); opacity: 0.65; }
+      .x-thanks { padding: clamp(32px, 5vw, 56px); border-radius: var(--r-l); background: var(--x-ink); color: var(--x-bone); }
+      .x-thanks[hidden], .x-form[hidden], .x-btn[hidden] { display: none; }
+      .x-contact > * + * { margin-top: 32px; }
+      .x-contact__item { padding-top: 20px; border-top: 1px solid var(--x-line-cream); }
+      .x-contact__item a.x-big { font: var(--weight-light) clamp(20px, 2.2vw, 26px)/1.3 var(--sans); text-decoration: none; border-bottom: 1px solid var(--x-line-cream); display: inline-flex; min-height: var(--tap); align-items: center; word-break: break-all; }
+      .x-contact__item a.x-big:hover { color: var(--x-bronze); border-color: var(--x-bronze); }
+      .x-socials { display: flex; gap: 8px; margin-top: 12px; }
+      .x-socials a { width: var(--tap); height: var(--tap); border-radius: 50%; display: grid; place-items: center; border: 1px solid currentColor; opacity: 0.8; transition: opacity var(--dur-quick), background var(--dur-quick); }
+      .x-socials a:hover { opacity: 1; }
+      .x-socials svg { width: 18px; height: 18px; }
+      .x-faq details { border-top: 1px solid var(--x-line-cream); }
+      .x-faq details:last-child { border-bottom: 1px solid var(--x-line-cream); }
+      .x-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 56px; font: var(--weight-regular) 17px/1.3 var(--sans); }
+      .x-faq summary::-webkit-details-marker { display: none; }
+      .x-faq summary::after { content: "+"; font-weight: 300; font-size: 24px; transition: transform var(--dur-quick) var(--ease-out); }
+      .x-faq details[open] summary::after { transform: rotate(45deg); }
+      .x-faq details p { padding-bottom: 20px; opacity: 0.7; font: var(--weight-regular) 15px/1.55 var(--sans); }
+
+      /* footer */
+      .x-foot { padding: 80px var(--x-pad) 40px; border-top: 1px solid var(--x-line-dark); background: var(--x-ink); color: var(--x-bone); }
+      .x-foot__top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 56px; }
+      .x-wordmark { display: flex; align-items: center; gap: 14px; font: var(--weight-medium) 18px/1 var(--sans); letter-spacing: 0.36em; }
+      .x-wordmark svg { width: 44px; height: 46px; flex: none; display: block; }
+      .x-foot__tag { margin-top: 20px; max-width: 34ch; opacity: 0.65; font: var(--weight-regular) 15px/1.55 var(--sans); }
+      .x-foot ul { list-style: none; padding: 0; margin: 12px 0 0; }
+      .x-nav__cta { transition: none; }
+      .x-foot li a { display: inline-flex; min-height: var(--tap); min-width: var(--tap); align-items: center; text-decoration: none; opacity: 0.75; }
+      .x-foot li a:hover { opacity: 1; }
+      .x-foot__bot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 24px; border-top: 1px solid var(--x-line-dark); font: var(--weight-regular) 13px/1.4 var(--sans); opacity: 0.6; }
+      .x-foot .badge { opacity: 1; }
+
+      @media (max-width: 900px) {
+        .x-nav__links, .x-nav__cta { display: none; }
+        .x-burger { display: block; }
+        .x-nav.is-open, .x-nav.is-open.is-cream, .x-nav.is-open.is-cream.is-scrolled { background: var(--x-ink); color: var(--x-bone); min-height: 100svh; }
+        .x-fab { display: inline-flex; }
+        .x-fab[hidden], .x-nav.is-open ~ .x-fab { display: none; }
+        .x-foot { padding-bottom: 96px; }
+        .x-results { grid-template-columns: 1fr 1fr; }
+        .x-results > div:nth-child(3) { border-left: 0; padding-left: 0; }
+        .x-results > div:nth-child(n+3) { border-top: 1px solid var(--x-line-dark); margin-top: 32px; }
+        .x-steps { grid-template-columns: 1fr 1fr; }
+        .x-steps li:nth-child(3) { border-left: 0; padding-left: 0; }
+        .x-steps li:nth-child(n+3) { border-top: 1px solid var(--x-line-cream); }
+        .x-nav.is-open .x-nav__in { flex-wrap: wrap; }
+        .x-nav.is-open .x-nav__links { display: flex; flex-direction: column; width: 100%; order: 3; margin: 32px 0 0; gap: 0; }
+        .x-nav.is-open .x-nav__links a { font: var(--weight-light) 34px/1.2 var(--sans); padding: 14px 0; border-top: 1px solid var(--x-line-dark); width: 100%; opacity: 1; }
+        .x-nav.is-open .x-nav__cta { display: inline-flex; order: 4; margin-top: 24px; background: var(--x-bone); color: var(--x-ink); border-color: var(--x-bone); }
+        .x-split, .x-book, .x-foot__top { grid-template-columns: 1fr; }
+        .x-grid { grid-template-columns: 1fr 1fr; }
+        .x-photo { aspect-ratio: 4 / 3; }
+      }
+      @media (max-width: 640px) {
+        .x-plat { grid-template-columns: 1fr 1fr; }
+        .x-plat li:nth-child(3) { border-left: 0; }
+        .x-plat li:nth-child(n+3) { border-top: 1px solid var(--x-line-dark); }
+        .x-ba, .x-grid, .x-form { grid-template-columns: 1fr; }
+        .x-ba > div + div { border-left: 0; border-top: 1px solid var(--x-line-dark); }
+        .x-stats { grid-template-columns: 1fr; }
+        .x-stats div + div { border-left: 0; padding-left: 0; }
+        .x-stats div { padding: 24px 0; border-bottom: 1px solid var(--x-line-cream); }
+        .x-steps { grid-template-columns: 1fr; }
+        .x-steps li + li { border-left: 0; padding-left: 0; border-top: 1px solid var(--x-line-cream); }
+        .x-steps li { display: grid; grid-template-columns: 96px 1fr; align-items: start; padding: 24px 0; }
+        .x-steps b { font-size: 64px; margin-bottom: 0; }
+      }
+
+      /* ===== motion pass ===== */
+      :root { --x-ease: cubic-bezier(0.22, 1, 0.36, 1); }
+      html { scroll-behavior: smooth; }
+      .x-nav { transition: transform 0.9s var(--x-ease), background 0.6s var(--x-ease), border-color 0.6s; }
+      .x-nav.is-scrolled { background: rgb(14 14 14 / 0.72); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
+      .x-nav.is-cream.is-scrolled { background: rgb(236 230 222 / 0.78); }
+      .x-nav.is-hidden:not(.is-open) { transform: translateY(-100%); }
+      .x-nav__links a { position: relative; }
+      .x-nav__links a[aria-current="page"] { text-decoration: none; }
+      .x-nav__links a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 10px; height: 1px; background: currentColor; transform: scaleX(0); transition: transform 0.9s var(--x-ease); }
+      .x-nav__links a:hover::after, .x-nav__links a[aria-current="page"]::after { transform: scaleX(1); }
+      .x-nav.is-open .x-nav__links a::after { display: none; }
+      .rv-m { display: block; overflow: hidden; padding-bottom: 0.12em; margin-bottom: -0.12em; }
+      .rv-i { display: block; }
+      .x-loader { display: none; }
+      @media (prefers-reduced-motion: no-preference) {
+        .js .rv-i { transform: translateY(110%); transition: transform 1.2s var(--x-ease) calc(var(--i, 0) * 120ms); }
+        .js .is-in .rv-i { transform: none; }
+        .js .x-hero .x-label, .js .x-hero .x-lede, .js .x-hero .x-btns { opacity: 0; translate: 0 20px; transition: opacity 1s var(--x-ease), translate 1s var(--x-ease); }
+        .js .x-hero .x-label { transition-delay: 420ms; }
+        .js .x-hero .x-lede { transition-delay: 560ms; }
+        .js .x-hero .x-btns { transition-delay: 700ms; }
+        .js .x-hero.is-in .x-label, .js .x-hero.is-in .x-lede, .js .x-hero.is-in .x-btns { opacity: 1; translate: 0 0; }
+        .js .x-kb { transform: scale(1.08); transition: transform 8s var(--x-ease); }
+        .js .is-in > .x-kb { transform: none; }
+        .js .rv-img { clip-path: inset(100% 0 0 0); transition: clip-path 1.3s var(--x-ease); }
+        .js .rv-img img, .js img.rv-img { transform: scale(1.12); transition: transform 1.3s var(--x-ease); }
+        .js .rv-img.is-in { clip-path: inset(0); }
+        .js .rv-img.is-in img, .js img.rv-img.is-in { transform: none; }
+        .js .rv-line { position: relative; border-top-color: transparent; }
+        .js .rv-line::after { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: currentColor; opacity: 0.15; transform: scaleX(0); transform-origin: left; transition: transform 1.3s var(--x-ease) 150ms; }
+        .js .rv-line.is-in::after { transform: scaleX(1); }
+        .js .x-loader { display: grid; place-content: center; justify-items: center; gap: 22px; position: fixed; inset: 0; z-index: 100; background: #0a0a0a; color: var(--x-bone); animation: x-up 0.35s var(--x-ease) 0.5s forwards; }
+        .x-loader svg { width: 72px; height: 76px; }
+        .x-loader path { fill: currentColor; fill-opacity: 0; stroke: currentColor; stroke-width: 10; stroke-dasharray: 1; stroke-dashoffset: 1; animation: x-draw 0.5s var(--x-ease) forwards, x-fill 0.2s var(--x-ease) 0.3s forwards; }
+        .x-loader p { font: var(--weight-medium) 13px/1 var(--sans); letter-spacing: 0.5em; margin-right: -0.5em; opacity: 0; animation: x-fadein 0.3s var(--x-ease) 0.15s forwards; }
+        @keyframes x-draw { to { stroke-dashoffset: 0; } }
+        @keyframes x-fill { to { fill-opacity: 1; } }
+        @keyframes x-fadein { to { opacity: 1; } }
+        @keyframes x-up { to { transform: translateY(-100%); } }
+      }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .x-nav, .x-nav__links a::after { transition: none; } }
+
+      /* ===== motion pass 2 ===== */
+      .x-curtain, .x-cur, .x-ring { display: none; }
+      @media (prefers-reduced-motion: no-preference) {
+        .js .x-curtain { display: grid; place-items: center; position: fixed; inset: 0; z-index: 90; background: #0a0a0a; color: var(--x-bone); transform: translateY(100%); visibility: hidden; pointer-events: none; }
+        .x-curtain svg { width: 40px; height: 42px; opacity: 0; transition: opacity 0.3s var(--x-ease) 0.15s; }
+        .x-curtain.is-in, .x-curtain.is-out { visibility: visible; pointer-events: auto; transition: transform 0.45s var(--x-ease); }
+        .x-curtain.is-in { transform: none; }
+        .x-curtain.is-out { transform: translateY(-100%); }
+        .x-curtain.is-in svg, .x-curtain.is-out svg { opacity: 1; }
+      }
+      @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+        .x-cursor, .x-cursor * { cursor: none !important; }
+        .x-cursor .x-cur, .x-cursor .x-ring { display: block; position: fixed; left: 0; top: 0; z-index: 110; pointer-events: none; mix-blend-mode: difference; transition: opacity 0.3s var(--x-ease); }
+        .x-cur::before { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%; background: var(--x-bone); transition: transform 0.4s var(--x-ease); }
+        .x-ring i { position: absolute; left: -18px; top: -18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--x-bone); transition: transform 0.5s var(--x-ease), background 0.5s var(--x-ease); }
+        .x-ring b { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); padding-left: 0.24em; font: var(--weight-medium) 12px/1 var(--sans); letter-spacing: 0.24em; color: var(--x-bone); opacity: 0; transition: opacity 0.3s var(--x-ease); }
+        .x-ring.is-link i { transform: scale(1.7); background: rgb(181 156 130 / 0.22); }
+        .x-ring.is-play i { transform: scale(2.4); }
+        .x-ring.is-play b { opacity: 1; }
+        .x-ring.is-play ~ .x-cur::before { transform: scale(0); }
+        .x-cur-off .x-cur, .x-cur-off .x-ring { opacity: 0; }
+        .x-btn.x-mag { position: relative; overflow: hidden; isolation: isolate; transition: translate 0.7s var(--x-ease), color var(--dur-quick), border-color var(--dur-quick); }
+        .x-mag::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--x-bronze-light); transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--x-ease); }
+        .x-cream .x-mag::before, .x-nav.is-cream .x-mag::before { background: var(--x-bronze); }
+        .x-mag:hover::before { transform: scaleX(1); }
+        html.x-js .x-mag:hover { background: var(--x-bone); }
+        html.x-js .x-cream .x-mag:hover, html.x-js .x-nav.is-cream .x-mag:hover { background: var(--x-ink); }
+      }
+      html.x-js .x-w { opacity: 0.15; transition: opacity 0.25s linear; }
+      .x-giant { margin: 0 0 48px; padding: 0 0 0.06em 0.08em; overflow: hidden; white-space: nowrap; text-align: center; font: var(--weight-light) clamp(40px, 11.5vw, 150px)/1 var(--sans); letter-spacing: 0.08em; }
+      .x-giant span { display: inline-block; }
+      html.x-js .x-giant span { opacity: 0; transform: translateY(105%); transition: transform 1s var(--x-ease) calc(var(--i) * 60ms), opacity 1s var(--x-ease) calc(var(--i) * 60ms); }
+      html.x-js .x-giant.is-in span { opacity: 1; transform: none; }
+    </style>
+  </head>
+  <body class="x-body">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <g id="x-mark" fill="currentColor">
+          <path d="M283 440 358 392V619L497 531V615L358 705V865L283 820Z" />
+          <path d="M497 946V307L626 218 757 307V865L954 738V513L842 440V354L1023 474V780L689 1000V686L611 630V539L688 596V341L626 298 565 341V992Z" />
+        </g>
+      </defs>
+    </svg>
+    <div class="x-loader" id="loader" aria-hidden="true">
+      <svg viewBox="270 205 768 810"><path pathLength="1" d="M283 440 358 392V619L497 531V615L358 705V865L283 820Z" /><path pathLength="1" d="M497 946V307L626 218 757 307V865L954 738V513L842 440V354L1023 474V780L689 1000V686L611 630V539L688 596V341L626 298 565 341V992Z" /></svg>
+      <p>HAD MEDIA</p>
+    </div>
+    <div class="x-curtain" id="curtain" aria-hidden="true"><svg viewBox="270 205 768 810"><use href="#x-mark" /></svg></div>
+    <div class="x-ring" id="ring" aria-hidden="true"><i></i><b>PLAY</b></div>
+    <div class="x-cur" id="cur" aria-hidden="true"></div>
+    <div id="top">
+      <header class="x-nav" id="nav">
+        <div class="x-nav__in">
+          <a class="x-brand" href="#home" aria-label="HAD Media home">
+            <svg viewBox="270 205 768 810" aria-hidden="true"><use href="#x-mark" /></svg>
+            <span>HAD MEDIA</span>
+          </a>
+          <ul class="x-nav__links" id="navlinks">
+            <li><a href="#home" data-route="home">Home</a></li>
+            <li><a href="#services" data-route="services">Services</a></li>
+            <li><a href="#book" data-route="book">Book a Call</a></li>
+          </ul>
+          <a class="x-btn x-btn--solid x-btn--sm x-nav__cta" href="#book">Book a call</a>
+          <button class="x-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks"><span></span><span></span><span></span></button>
+        </div>
+      </header>
+
+      <!-- HOME -->
+      <main class="x-view" data-view="home" id="view-home">
+        <section class="x-hero" data-tone="dark">
+          <img class="x-kb" src="hero.png" alt="Dark concrete stairs crossed by monstera leaf shadows" />
+          <div class="x-in">
+            <p class="x-label">Social media management agency</p>
+            <h1 class="x-h1"><span class="rv-m"><span class="rv-i">We don't just post.</span></span><span class="rv-m"><span class="rv-i" style="--i: 1">We build <span class="x-hi">growth systems.</span></span></span></h1>
+            <p class="x-lede" style="margin-top: 28px">HAD Media runs your Instagram, YouTube, LinkedIn and X end to end: strategy, content, creators and analytics, so your brand shows up every week and actually converts.</p>
+            <div class="x-btns">
+              <a class="x-btn x-btn--solid" href="#book">Book a free call</a>
+              <button class="x-btn x-btn--ghost" type="button" data-scroll="vsl">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z" fill="currentColor" /></svg>Watch the video
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="x-marquee" data-tone="dark" role="marquee" aria-label="Instagram, YouTube, LinkedIn, X, strategy, content, creators, analytics">
+          <div class="x-marquee__track" aria-hidden="true">
+            <p>INSTAGRAM · YOUTUBE · LINKEDIN · X · STRATEGY · CONTENT · CREATORS · ANALYTICS ·</p>
+            <p>INSTAGRAM · YOUTUBE · LINKEDIN · X · STRATEGY · CONTENT · CREATORS · ANALYTICS ·</p>
+            <p>INSTAGRAM · YOUTUBE · LINKEDIN · X · STRATEGY · CONTENT · CREATORS · ANALYTICS ·</p>
+            <p>INSTAGRAM · YOUTUBE · LINKEDIN · X · STRATEGY · CONTENT · CREATORS · ANALYTICS ·</p>
+          </div>
+        </div>
+
+        <section class="x-sec x-cream x-center" id="vsl" data-tone="cream">
+          <div class="x-in">
+            <p class="x-label">Watch this first</p>
+            <h2 class="x-h2">How we turn followers into <span class="x-em x-hi">customers.</span></h2>
+            <div class="x-video" id="vsl-frame">
+              <a class="x-poster" href="https://youtu.be/l3mQe7QHCKk" target="_blank" rel="noopener" aria-label="Play “What is HAD” on YouTube">
+                <img src="https://i.ytimg.com/vi/l3mQe7QHCKk/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/l3mQe7QHCKk/hqdefault.jpg'" />
+                <span class="x-poster__in">
+                  <span class="x-poster__btn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" /></svg></span>
+                  <span class="x-poster__title">What is HAD</span>
+                </span>
+              </a>
+            </div>
+            <script>
+              (function () {
+                var sandboxed = (window.origin === "null" || location.origin === "null");
+                try { void document.cookie; } catch (e) { sandboxed = true; }
+                if (sandboxed) return;
+                var frame = document.getElementById("vsl-frame");
+                if (!frame) return;
+                frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/l3mQe7QHCKk?rel=0&amp;modestbranding=1&amp;playsinline=1" title="What is HAD" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>';
+              })();
+            </script>
+            <p class="x-vsl-yt"><a href="https://youtu.be/l3mQe7QHCKk" target="_blank" rel="noopener">Watch on YouTube ↗</a></p>
+            <div class="x-vsl-cta"><a class="x-arrow" href="#book">Ready? Book your free strategy call →</a></div>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark x-plat-sec" data-tone="dark">
+          <div class="x-in">
+            <p class="x-label x-center">Platforms we manage</p>
+            <ul class="x-plat" style="list-style: none; padding: 0">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" /></svg>Instagram</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" /><path d="M10 9.5v5l4.5-2.5z" fill="currentColor" /></svg>YouTube</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7.5 10.5V17M7.5 7.2v.1M11 17v-6.5M11 13.5c0-2 1.3-3 2.8-3s2.7 1 2.7 3V17" /></svg>LinkedIn</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20" opacity="0" /><path d="M4 4h4.5L20 20h-4.5zM19.5 4l-6.6 7.2M4.5 20l6.6-7.2" /></svg>X</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in x-split">
+            <div class="x-stack">
+              <p class="x-label">About HAD Media</p>
+              <h2 class="x-h2">The future of marketing is <span class="x-em x-hi">human + AI.</span></h2>
+              <p class="x-lede">We're a creative social media agency for brands that want to be remembered.</p>
+              <p class="x-trio"><span>Better insights.</span><span>Smarter content.</span><span>Stronger results.</span></p>
+              <p class="x-lede">We believe <strong style="font-weight: 500">followers ≠ influence</strong>: engagement rate, comment quality, audience relevance and content consistency <span class="x-hi">drive sales</span>, not follower count.</p>
+            </div>
+            <figure class="x-photo rv-img"><img src="about.png" alt="A monstera leaf against a cream wall" width="1200" height="896" /></figure>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in">
+            <p class="x-label">The difference</p>
+            <h2 class="x-h2">From random posting to <span class="x-hi">real results.</span></h2>
+            <div class="x-ba">
+              <div class="is-before">
+                <p class="x-label">Before working with us</p>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>Random posting</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>Low engagement</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>No strategy</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>No results</li>
+                </ul>
+              </div>
+              <div class="is-after">
+                <p class="x-label">After working with us</p>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" /></svg>Clear content strategy</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" /></svg>High engagement</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" /></svg>Right creators</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" /></svg>Real results</li>
+                </ul>
+              </div>
+            </div>
+            <p style="margin-top: 40px"><a class="x-arrow" href="#book">Make the switch. Let's talk →</a></p>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in">
+            <p class="x-label">Results we drive</p>
+            <h2 class="x-h2">Numbers that <span class="x-em x-hi">move the business.</span></h2>
+            <div class="x-results">
+              <div><b data-count>3.2X</b><span>Sales growth</span></div>
+              <div><b data-count>+180%</b><span>Reach</span></div>
+              <div><b data-count>2.4X</b><span>ROAS</span></div>
+              <div><b data-count>90</b><span>Days to results</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec x-cream" data-tone="cream">
+          <div class="x-in">
+            <p class="x-label">Case study</p>
+            <h2 class="x-h2" style="max-width: 20ch">Helping a D2C brand grow <span class="x-hi">3.2X in 90 days</span> with creator-led content.</h2>
+            <div class="x-stats">
+              <div><b data-count>+180%</b><span>Reach</span></div>
+              <div><b data-count>+3.2X</b><span>Sales</span></div>
+              <div><b data-count>+2.4X</b><span>ROAS</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec x-cream x-center" data-tone="cream" style="border-top: 1px solid var(--x-line-cream)">
+          <div class="x-in">
+            <span class="x-mark" aria-hidden="true">“</span>
+            <p class="x-quote">Marketing is no longer about what you make. It's about the <span class="x-em x-hi">stories you tell</span> and the people you choose to tell them.</p>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in">
+            <figure class="x-testi" style="margin-inline: auto">
+              <span class="x-mark" aria-hidden="true">“</span>
+              <blockquote>HAD Media understood our brand better than any agency we've worked with. The results speak for themselves.</blockquote>
+              <figcaption>Rishab Bansal, CEO, Tulsi Pipes</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark x-center" data-tone="dark">
+          <div class="x-in x-stack">
+            <p class="x-label">Let's talk</p>
+            <h2 class="x-h2">Let's build something <span class="x-em x-hi">impactful</span> together.</h2>
+            <div class="x-btns" style="justify-content: center"><a class="x-btn x-btn--solid" href="#book">Book a call</a></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- SERVICES -->
+      <main class="x-view" data-view="services" id="view-services" hidden>
+        <section class="x-hero x-hero--page x-hero--cream" data-tone="cream">
+          <img class="rv-img" src="services.png" alt="A flat-lay of a phone, a camera and a content calendar" width="1376" height="768" style="object-position: right center" />
+          <div class="x-in">
+            <p class="x-label">What we do</p>
+            <h1 class="x-h1" style="max-width: 14ch"><span class="rv-m"><span class="rv-i">Great content doesn't happen by chance.</span></span><span class="rv-m"><span class="rv-i x-em x-hi" style="--i: 1">It's designed.</span></span></h1>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in">
+            <p class="x-label">Services</p>
+            <h2 class="x-h2" style="max-width: 18ch">Everything your socials need, <span class="x-hi">run by one team.</span></h2>
+            <div class="x-grid">
+              <article class="x-card"><span class="x-card__n">01</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" /></svg><h3 class="x-h3">Instagram Management</h3><p>Content calendar, Reels, carousels, stories, captions and community management.</p><a class="x-more" href="#book" aria-label="Learn more about Instagram Management">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">02</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" /><path d="M10 9.5v5l4.5-2.5z" /></svg><h3 class="x-h3">YouTube Management</h3><p>Channel strategy, long-form and Shorts editing, thumbnails, titles and SEO.</p><a class="x-more" href="#book" aria-label="Learn more about YouTube Management">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">03</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7.5 10.5V17M7.5 7.2v.1M11 17v-6.5M11 13.5c0-2 1.3-3 2.8-3s2.7 1 2.7 3V17" /></svg><h3 class="x-h3">LinkedIn Growth</h3><p>Founder personal branding, thought-leadership posts and company page management.</p><a class="x-more" href="#book" aria-label="Learn more about LinkedIn Growth">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">04</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M4 4h4.5L20 20h-4.5zM19.5 4l-6.6 7.2M4.5 20l6.6-7.2" /></svg><h3 class="x-h3">X (Twitter) Management</h3><p>Threads, daily posting, engagement and audience growth.</p><a class="x-more" href="#book" aria-label="Learn more about X (Twitter) Management">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">05</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c.5-3.5 3.2-5.5 6.5-5.5s6 2 6.5 5.5" /><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c2 .7 3.2 2.5 3.5 5.2" /></svg><h3 class="x-h3">Influencer Marketing</h3><p>Finding creators who align, not just big follower counts.</p><a class="x-more" href="#book" aria-label="Learn more about Influencer Marketing">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">06</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 014.5 7h2.2L8.3 5h7.4l1.6 2h2.2A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z" /><circle cx="12" cy="13" r="3.5" /></svg><h3 class="x-h3">UGC &amp; Content Production</h3><p>Shoots, edits and creator-made content.</p><a class="x-more" href="#book" aria-label="Learn more about UGC and Content Production">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">07</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M4 14l3-1 9-7.5 2.5 2.5L11 17l-1 3-6-6z" /><path d="M14 7.5l2.5 2.5M6 18l-2 2" /></svg><h3 class="x-h3">Campaign Management</h3><p>Launches and paid boosts across platforms.</p><a class="x-more" href="#book" aria-label="Learn more about Campaign Management">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">08</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><path d="M3 3v18h18" /><path d="M7 15l4-4 3 3 6-6" /><path d="M16 8h4v4" /></svg><h3 class="x-h3">Performance Analytics</h3><p>Monthly reports on reach, engagement and conversions.</p><a class="x-more" href="#book" aria-label="Learn more about Performance Analytics">Learn more <span aria-hidden="true">→</span></a></article>
+              <article class="x-card"><span class="x-card__n">09</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M15.5 8.5l-2 5-5 2 2-5z" /></svg><h3 class="x-h3">Strategy &amp; Consulting</h3><p>Audits and a clear growth roadmap.</p><a class="x-more" href="#book" aria-label="Learn more about Strategy and Consulting">Learn more <span aria-hidden="true">→</span></a></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec x-cream" data-tone="cream">
+          <div class="x-in">
+            <p class="x-label">Our process</p>
+            <h2 class="x-h2">Four steps. <span class="x-em x-hi">One system.</span></h2>
+            <ol class="x-steps">
+              <li><b>01</b><div><h3>Strategy</h3><p>We research. We plan.</p></div></li>
+              <li><b>02</b><div><h3>Creators</h3><p>We find the right fit.</p></div></li>
+              <li><b>03</b><div><h3>Content</h3><p>We manage. We create.</p></div></li>
+              <li><b>04</b><div><h3>Results</h3><p>We analyze. We optimize.</p></div></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="x-sec x-dark" data-tone="dark">
+          <div class="x-in">
+            <p class="x-label">Stop doing this</p>
+            <h2 class="x-h2">3 things every brand should <span class="x-hi">stop doing.</span></h2>
+            <ul class="x-stop">
+              <li><span aria-hidden="true">✕</span>Working with creators who don't align.</li>
+              <li><span aria-hidden="true">✕</span>Chasing vanity metrics.</li>
+              <li><span aria-hidden="true">✕</span>Posting without a strategy.</li>
+            </ul>
+            <p class="x-h3" style="margin-top: 40px">Start building. <span class="x-em x-hi" style="font-size: 1.2em">Start scaling.</span></p>
+          </div>
+        </section>
+
+        <section class="x-band" data-tone="dark">
+          <img class="rv-img" src="cta.png" alt="" width="1376" height="768" />
+          <div class="x-in x-stack">
+            <p class="x-label">HAD Media</p>
+            <h2 class="x-h2" style="max-width: 20ch; margin-inline: auto">We don't just run campaigns. We build <span class="x-em x-hi">growth systems.</span></h2>
+            <div class="x-btns" style="justify-content: center"><a class="x-btn x-btn--solid" href="#book">Book a call</a></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- BOOK -->
+      <main class="x-view" data-view="book" id="view-book" hidden>
+        <section class="x-hero x-hero--page" data-tone="dark">
+          <img class="rv-img" src="book.png" alt="A meeting table by a window at golden hour" width="1376" height="768" />
+          <div class="x-in">
+            <p class="x-label">Let's talk</p>
+            <h1 class="x-h1" style="max-width: 13ch"><span class="rv-m"><span class="rv-i">Discipline today.</span></span><span class="rv-m"><span class="rv-i x-em x-hi" style="--i: 1">Dominance tomorrow.</span></span></h1>
+            <p class="x-lede" style="margin-top: 28px">Book a free 30-minute strategy call. We'll audit your socials and show you exactly what we'd do.</p>
+          </div>
+        </section>
+
+        <section class="x-sec x-cream" data-tone="cream">
+          <div class="x-in x-book">
+            <div>
+              <form class="x-form" id="book-form" novalidate>
+                <div class="x-field"><label for="f-name">Name</label><input class="x-input" id="f-name" name="name" autocomplete="name" required /></div>
+                <div class="x-field"><label for="f-email">Email</label><input class="x-input" id="f-email" name="email" type="email" autocomplete="email" required /></div>
+                <div class="x-field"><label for="f-phone">Phone / WhatsApp</label><input class="x-input" id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
+                <div class="x-field"><label for="f-brand">Brand / Instagram handle</label><input class="x-input" id="f-brand" name="brand" placeholder="@yourbrand" /></div>
+                <div class="x-field x-field--full">
+                  <fieldset>
+                    <legend>Platforms needed</legend>
+                    <div class="x-checks">
+                      <label class="x-check"><input type="checkbox" name="platforms" value="Instagram" /><span>Instagram</span></label>
+                      <label class="x-check"><input type="checkbox" name="platforms" value="YouTube" /><span>YouTube</span></label>
+                      <label class="x-check"><input type="checkbox" name="platforms" value="LinkedIn" /><span>LinkedIn</span></label>
+                      <label class="x-check"><input type="checkbox" name="platforms" value="X" /><span>X</span></label>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="x-field x-field--full">
+                  <label for="f-budget">Monthly budget</label>
+                  <select class="x-input" id="f-budget" name="budget">
+                    <option value="">Select a range</option>
+                    <option>Under ₹25k</option>
+                    <option>₹25k–50k</option>
+                    <option>₹50k–1L</option>
+                    <option>₹1L+</option>
+                  </select>
+                </div>
+                <div class="x-field"><label for="f-date">Preferred date</label><input class="x-input" id="f-date" name="date" type="date" /></div>
+                <div class="x-field">
+                  <label for="f-time">Preferred time</label>
+                  <select class="x-input" id="f-time" name="time">
+                    <option value="">Select a slot</option>
+                    <option>10:00–11:00 IST</option>
+                    <option>11:00–12:00 IST</option>
+                    <option>12:00–13:00 IST</option>
+                    <option>13:00–14:00 IST</option>
+                    <option>14:00–15:00 IST</option>
+                    <option>15:00–16:00 IST</option>
+                    <option>16:00–17:00 IST</option>
+                    <option>17:00–18:00 IST</option>
+                  </select>
+                </div>
+                <div class="x-field x-field--full"><label for="f-msg">Message</label><textarea class="x-input" id="f-msg" name="message" placeholder="Tell us about your brand and goals"></textarea></div>
+                <div class="x-form__foot">
+                  <button class="x-btn x-btn--solid" type="submit">Request my call →</button>
+                  <a class="x-btn x-btn--ghost" id="calendar-btn" href="#" target="_blank" rel="noopener" hidden>Pick a time on my calendar</a>
+                  <p class="x-small" id="form-error" role="alert"></p>
+                </div>
+                <p class="x-small x-field--full">Submitting opens your email app with the details filled in, addressed to hadmedia09@gmail.com.</p>
+              </form>
+              <div class="x-thanks x-stack" id="thanks" hidden tabindex="-1">
+                <p class="x-label">Request sent</p>
+                <h2 class="x-h2">Thank you. <span class="x-em x-hi">Talk soon.</span></h2>
+                <p class="x-lede">Send the email that just opened and we'll confirm your slot within one working day. If nothing opened, write to <a class="link" href="mailto:hadmedia09@gmail.com">hadmedia09@gmail.com</a>.</p>
+                <div class="x-btns"><button class="x-btn x-btn--ghost" type="button" id="again">Send another request</button></div>
+              </div>
+            </div>
+
+            <aside class="x-contact">
+              <div>
+                <p class="x-label">Contact</p>
+                <h2 class="x-h2" style="font-size: clamp(28px, 3vw, 40px)">Prefer to <span class="x-em x-hi">just talk?</span></h2>
+              </div>
+              <div class="x-contact__item">
+                <p class="x-label" style="margin-bottom: 4px">Email</p>
+                <a class="x-big" href="mailto:hello@hadmedia.in">hello@hadmedia.in</a><br />
+                <a class="x-big" href="mailto:hadmedia09@gmail.com">hadmedia09@gmail.com</a>
+              </div>
+              <div class="x-contact__item">
+                <p class="x-label" style="margin-bottom: 4px">Phone</p>
+                <a class="x-big" href="tel:+919022308459">+91 90223 08459</a>
+                <p style="margin-top: 8px"><a class="link" href="https://wa.me/919022308459" target="_blank" rel="noopener">WhatsApp us</a></p>
+              </div>
+              <div class="x-contact__item">
+                <p class="x-label" style="margin-bottom: 4px">DM us to start a conversation</p>
+                <a class="x-big" href="https://www.instagram.com/had.media/" data-social="instagram" target="_blank" rel="noopener">@had.media</a>
+                <div class="x-socials">
+                  <a href="https://www.instagram.com/had.media/" data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /></svg></a>
+                  <a href="#" data-social="linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 10v8M6 6.2v.1M10 18v-8M10 13.5c0-2.2 1.4-3.5 3.2-3.5S16.5 11.3 16.5 13.5V18" /></svg></a>
+                  <a href="#" data-social="x" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4h4.5L20 20h-4.5zM19.5 4l-6.6 7.2M4.5 20l6.6-7.2" /></svg></a>
+                </div>
+              </div>
+              <div class="x-faq">
+                <p class="x-label">FAQ</p>
+                <details>
+                  <summary>Which platforms do you manage?</summary>
+                  <p>Instagram, YouTube, LinkedIn and X.</p>
+                </details>
+                <details>
+                  <summary>How soon will I see results?</summary>
+                  <p>Most brands see engagement lift within the first 30 days and compounding growth by 90.</p>
+                </details>
+                <details>
+                  <summary>Do you create the content too?</summary>
+                  <p>Yes, strategy, shooting, editing and posting are all handled by us.</p>
+                </details>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="x-foot x-dark">
+        <div class="x-in">
+          <div class="x-foot__top">
+            <div>
+              <p class="x-wordmark"><svg viewBox="270 205 768 810" aria-hidden="true"><use href="#x-mark" /></svg>HAD MEDIA</p>
+              <p class="x-foot__tag">Strategy. Intelligence. Craft. We build brands that people remember.</p>
+            </div>
+            <div>
+              <p class="x-label">Pages</p>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#book">Book a Call</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="x-label">Contact</p>
+              <ul>
+                <li><a href="mailto:hello@hadmedia.in">hello@hadmedia.in</a></li>
+                <li><a href="mailto:hadmedia09@gmail.com">hadmedia09@gmail.com</a></li>
+                <li><a href="tel:+919022308459">+91 90223 08459</a></li>
+                <li><a href="https://www.instagram.com/had.media/" data-social="instagram" target="_blank" rel="noopener">Instagram @had.media</a></li>
+              </ul>
+            </div>
+          </div>
+          <p class="x-giant" id="giant" aria-hidden="true"><span style="--i: 0">H</span><span style="--i: 1">A</span><span style="--i: 2">D</span><span style="--i: 3">&nbsp;</span><span style="--i: 4">M</span><span style="--i: 5">E</span><span style="--i: 6">D</span><span style="--i: 7">I</span><span style="--i: 8">A</span></p>
+          <div class="x-foot__bot">
+            <p>© 2026 HAD Media. All rights reserved.</p>
+            <a class="badge" href="https://hark.com/" target="_blank" rel="noopener"><span class="hark-mark"></span><span>built by hark</span></a>
+          </div>
+        </div>
+      </footer>
+      <a class="x-btn x-fab" id="fab" href="#book">Book a call</a>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      /* ============ EDIT THESE ============ */
+      // Calendly (or any scheduler) link. When set, a "Pick a time on my calendar" button appears on Book a Call.
+      const BOOKING_URL = "";
+      // Social profile links (replace "#" with real URLs).
+      const SOCIAL_INSTAGRAM_URL = "https://www.instagram.com/had.media/";
+      const SOCIAL_YOUTUBE_URL = "https://www.youtube.com/@Had.media09";
+      const SOCIAL_LINKEDIN_URL = "#";
+      const SOCIAL_X_URL = "#";
+      /* ==================================== */
+
+      (function () {
+        var ROUTES = ["home", "services", "book"];
+        var nav = document.getElementById("nav");
+        var burger = document.getElementById("burger");
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var current = null;
+
+        function closeMenu() {
+          nav.classList.remove("is-open");
+          burger.setAttribute("aria-expanded", "false");
+          burger.setAttribute("aria-label", "Open menu");
+          document.body.style.overflow = "";
+        }
+        burger.addEventListener("click", function () {
+          var open = !nav.classList.contains("is-open");
+          nav.classList.toggle("is-open", open);
+          burger.setAttribute("aria-expanded", String(open));
+          burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          document.body.style.overflow = open ? "hidden" : "";
+        });
+
+        var curtain = document.getElementById("curtain"), busy = false, veiled = false;
+        function hashName() { var n = (location.hash || "#home").slice(1); return ROUTES.indexOf(n) < 0 ? "home" : n; }
+        function route() {
+          if (anim && current && hashName() !== current && curtain) {
+            closeMenu();
+            if (busy) return;
+            busy = true;
+            curtain.classList.remove("is-out"); void curtain.offsetWidth; curtain.classList.add("is-in");
+            setTimeout(function () {
+              veiled = true; apply(); veiled = false;
+              curtain.classList.replace("is-in", "is-out");
+              setTimeout(function () { curtain.classList.remove("is-out"); busy = false; if (hashName() !== current) route(); }, 460);
+            }, 450);
+            return;
+          }
+          apply();
+        }
+        function apply() {
+          var name = hashName();
+          closeMenu();
+          if (name !== current) {
+            ROUTES.forEach(function (r) {
+              var v = document.getElementById("view-" + r);
+              if (r === name) reset(v);
+              v.hidden = r !== name;
+            });
+            play(document.getElementById("view-" + name));
+            document.querySelectorAll("[data-route]").forEach(function (a) {
+              if (a.dataset.route === name) a.setAttribute("aria-current", "page");
+              else a.removeAttribute("aria-current");
+            });
+            var titles = { home: "HAD Media · Social media management agency", services: "Services · HAD Media", book: "Book a call · HAD Media" };
+            document.title = titles[name];
+            document.getElementById("fab").hidden = name === "book";
+            current = name;
+          }
+          window.scrollTo({ top: 0, behavior: "auto" });
+          tone();
+        }
+        window.addEventListener("hashchange", route);
+        document.addEventListener("click", function (e) {
+          var a = e.target.closest('a[href^="#"]');
+          if (a && a.getAttribute("href") === location.hash && ROUTES.indexOf(location.hash.slice(1)) > -1) { e.preventDefault(); route(); }
+        });
+
+        /* nav colour follows the section beneath it */
+        function tone() {
+          var view = document.getElementById("view-" + current);
+          var secs = [].slice.call(view.querySelectorAll("[data-tone]"));
+          var y = 36, t = "dark";
+          secs.forEach(function (s) {
+            var r = s.getBoundingClientRect();
+            if (r.top <= y && r.bottom > y) t = s.dataset.tone;
+          });
+          nav.classList.toggle("is-cream", t === "cream");
+          var sy = window.scrollY;
+          nav.classList.toggle("is-scrolled", sy > 40);
+          if (Math.abs(sy - lastY) > 4 || sy < 40) { nav.classList.toggle("is-hidden", sy > lastY && sy > 120); lastY = sy; }
+          scrub();
+        }
+        /* scroll-scrubbed reading words */
+        var words = [];
+        function scrub() {
+          var vh = window.innerHeight;
+          words.forEach(function (b) {
+            var r = b.el.getBoundingClientRect();
+            if (!r.height) return;
+            var p = Math.min(Math.max((vh * 0.9 - r.top) / (vh * 0.55), 0), 1) * b.w.length;
+            b.w.forEach(function (w, i) { w.style.opacity = 0.15 + 0.85 * Math.min(Math.max(p - i, 0), 1); });
+          });
+        }
+        var lastY = 0;
+        nav.addEventListener("focusin", function () { nav.classList.remove("is-hidden"); });
+
+        /* reveal replay per view (shared observer set up below) */
+        var anim = !reduce && "IntersectionObserver" in window, rvObs = null, first = true;
+        var loader = document.getElementById("loader");
+        var loading = loader && getComputedStyle(loader).display !== "none";
+        function dropLoader() { if (loader && loader.parentNode) loader.remove(); }
+        if (loader) setTimeout(dropLoader, loading ? 860 : 0);
+        /* safety: once the page has loaded, never hold the loader past 1s */
+        function capLoader() { setTimeout(dropLoader, Math.max(0, 1000 - performance.now())); }
+        if (loader && loading) { if (document.readyState === "complete") capLoader(); else window.addEventListener("load", capLoader); }
+        function reset(v) {
+          if (!rvObs) return;
+          v.querySelectorAll(".is-in").forEach(function (el) {
+            el.classList.remove("is-in");
+            if (el.dataset.d) el.style.transitionDelay = el.dataset.d;
+            if (el.matches(".x-rv, .rv-mask, .rv-img, .rv-line")) rvObs.observe(el);
+          });
+        }
+        function play(v) {
+          var hero = v.querySelector(".x-hero");
+          if (!hero) return;
+          if (!anim) { hero.classList.add("is-in"); return; }
+          setTimeout(function () { hero.classList.add("is-in"); }, first && loading ? 500 : veiled ? 420 : 60);
+          first = false;
+        }
+        var ticking = false;
+        window.addEventListener("scroll", function () {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () { tone(); ticking = false; });
+        }, { passive: true });
+        window.addEventListener("resize", tone, { passive: true });
+
+        /* in-page scroll buttons */
+        document.querySelectorAll("[data-scroll]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var el = document.getElementById(b.dataset.scroll);
+            if (el) el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+          });
+        });
+
+        /* social links */
+        var SOCIAL = { instagram: SOCIAL_INSTAGRAM_URL, youtube: SOCIAL_YOUTUBE_URL, linkedin: SOCIAL_LINKEDIN_URL, x: SOCIAL_X_URL };
+        document.querySelectorAll("[data-social]").forEach(function (a) {
+          var url = SOCIAL[a.dataset.social] || "#";
+          a.href = url;
+          if (url === "#") { a.removeAttribute("target"); a.addEventListener("click", function (e) { e.preventDefault(); }); }
+        });
+
+        /* calendar button */
+        var cal = document.getElementById("calendar-btn");
+        if (BOOKING_URL) { cal.href = BOOKING_URL; cal.hidden = false; }
+
+        /* booking form → mailto */
+        var form = document.getElementById("book-form");
+        var thanks = document.getElementById("thanks");
+        var err = document.getElementById("form-error");
+        var dateIn = document.getElementById("f-date");
+        dateIn.min = new Date().toISOString().slice(0, 10);
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var d = new FormData(form);
+          var name = (d.get("name") || "").trim(), email = (d.get("email") || "").trim();
+          if (!name || !/^\S+@\S+\.\S+$/.test(email)) {
+            err.textContent = "Please add your name and a valid email.";
+            document.getElementById(name ? "f-email" : "f-name").focus();
+            return;
+          }
+          err.textContent = "";
+          var platforms = d.getAll("platforms").join(", ") || "Not specified";
+          var body = [
+            "Name: " + name,
+            "Email: " + email,
+            "Phone / WhatsApp: " + (d.get("phone") || "-"),
+            "Brand / Instagram: " + (d.get("brand") || "-"),
+            "Platforms: " + platforms,
+            "Monthly budget: " + (d.get("budget") || "-"),
+            "Preferred date: " + (d.get("date") || "-"),
+            "Preferred time: " + (d.get("time") || "-"),
+            "",
+            "Message:",
+            d.get("message") || "-"
+          ].join("\n");
+          var subject = "Strategy call request — " + name;
+          window.location.href = "mailto:hadmedia09@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+          form.hidden = true;
+          thanks.hidden = false;
+          thanks.focus();
+        });
+        document.getElementById("again").addEventListener("click", function () {
+          form.reset();
+          thanks.hidden = true;
+          form.hidden = false;
+        });
+
+        /* scroll reveal + count-up */
+        if (!reduce && "IntersectionObserver" in window) {
+          document.documentElement.classList.add("x-js");
+          var groups = [".x-label", ".x-lede", ".x-trio", ".x-quote", ".x-testi", ".x-video", ".x-ba", ".x-arrow", ".x-card", ".x-stats > div", ".x-results > div", ".x-steps li", ".x-stop li"];
+          var rvEls = document.querySelectorAll(groups.map(function (s) { return "main " + s; }).join(","));
+          rvEls.forEach(function (el) {
+            if (el.closest(".x-hero")) return;
+            el.classList.add("x-rv");
+            var sibs = el.parentElement.children, i = [].indexOf.call(sibs, el);
+            if (el.matches(".x-card, .x-stats > div, .x-results > div, .x-steps li, .x-stop li")) el.style.transitionDelay = el.dataset.d = Math.min(i, 5) * 80 + "ms";
+          });
+          document.querySelectorAll("main .x-h2").forEach(function (h) {
+            h.classList.add("rv-mask");
+            h.innerHTML = '<span class="rv-m"><span class="rv-i">' + h.innerHTML + "</span></span>";
+          });
+          document.querySelectorAll(".x-plat, .x-trio, .x-results, .x-stats, .x-steps, .x-stop li, .x-contact__item, .x-faq details, .x-foot__bot").forEach(function (el) { el.classList.add("rv-line"); });
+          rvObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (!en.isIntersecting) return;
+              en.target.classList.add("is-in");
+              rvObs.unobserve(en.target);
+              en.target.addEventListener("transitionend", function clear(ev) {
+                if (ev.propertyName !== "opacity") return;
+                en.target.style.transitionDelay = "";
+                en.target.removeEventListener("transitionend", clear);
+              });
+            });
+          }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+          document.querySelectorAll(".x-rv, .rv-mask, .rv-img, .rv-line").forEach(function (el) { rvObs.observe(el); });
+
+          var counts = document.querySelectorAll("[data-count]");
+          counts.forEach(function (el) {
+            var m = el.textContent.trim().match(/^([^\d]*)([\d.]+)(.*)$/);
+            if (!m) return;
+            el.dataset.pre = m[1]; el.dataset.num = m[2]; el.dataset.suf = m[3];
+            el.dataset.dec = (m[2].split(".")[1] || "").length;
+            el.setAttribute("aria-label", el.textContent.trim());
+            el.textContent = m[1] + (0).toFixed(el.dataset.dec) + m[3];
+          });
+          var cObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (!en.isIntersecting) return;
+              cObs.unobserve(en.target);
+              var el = en.target, end = parseFloat(el.dataset.num), dec = +el.dataset.dec, t0 = null, dur = 1600;
+              function step(t) {
+                if (t0 === null) t0 = t;
+                var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+                el.textContent = el.dataset.pre + (end * e).toFixed(dec) + el.dataset.suf;
+                if (p < 1) requestAnimationFrame(step);
+              }
+              requestAnimationFrame(step);
+            });
+          }, { threshold: 0.5 });
+          counts.forEach(function (el) { if (el.dataset.num) cObs.observe(el); });
+        }
+
+        /* motion pass 2: words, footer wordmark, cursor, magnet, tilt */
+        if (anim) {
+          document.querySelectorAll(".x-quote, .x-testi blockquote").forEach(function (el) {
+            var tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], n;
+            while ((n = tw.nextNode())) nodes.push(n);
+            nodes.forEach(function (t) {
+              var f = document.createDocumentFragment();
+              t.textContent.split(/(\s+)/).forEach(function (s) {
+                if (!s) return;
+                if (/^\s+$/.test(s)) { f.appendChild(document.createTextNode(s)); return; }
+                var sp = document.createElement("span"); sp.className = "x-w"; sp.textContent = s; f.appendChild(sp);
+              });
+              t.parentNode.replaceChild(f, t);
+            });
+            words.push({ el: el, w: [].slice.call(el.querySelectorAll(".x-w")) });
+          });
+          if (rvObs) rvObs.observe(document.getElementById("giant"));
+        }
+        if (anim && window.matchMedia("(pointer: fine)").matches) {
+          var root = document.documentElement, ring = document.getElementById("ring"), dot = document.getElementById("cur");
+          var mx = -100, my = -100, rx = -100, ry = -100, raf = 0;
+          root.classList.add("x-cursor", "x-cur-off");
+          function follow() {
+            rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+            ring.style.transform = "translate(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px)";
+            raf = Math.abs(mx - rx) + Math.abs(my - ry) > 0.2 ? requestAnimationFrame(follow) : 0;
+          }
+          document.addEventListener("mousemove", function (e) {
+            if (mx === -100) { rx = e.clientX; ry = e.clientY; }
+            mx = e.clientX; my = e.clientY;
+            dot.style.transform = "translate(" + mx + "px," + my + "px)";
+            root.classList.remove("x-cur-off");
+            if (!raf) raf = requestAnimationFrame(follow);
+          }, { passive: true });
+          document.addEventListener("mouseover", function (e) {
+            var t = e.target, v = t.closest && t.closest("#vsl-frame");
+            ring.classList.toggle("is-play", !!v);
+            ring.classList.toggle("is-link", !v && !!(t.closest && t.closest("a, button, summary, label")));
+            root.classList.toggle("x-cur-off", t.tagName === "IFRAME");
+          });
+          document.addEventListener("mouseout", function (e) { if (!e.relatedTarget) root.classList.add("x-cur-off"); });
+
+          document.querySelectorAll('a.x-btn--solid[href="#book"]').forEach(function (b) {
+            b.classList.add("x-mag");
+            b.addEventListener("mousemove", function (e) {
+              var r = b.getBoundingClientRect();
+              var dx = (e.clientX - r.left - r.width / 2) / (r.width / 2), dy = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+              b.style.translate = (Math.max(-1, Math.min(1, dx)) * 8).toFixed(1) + "px " + (Math.max(-1, Math.min(1, dy)) * 8).toFixed(1) + "px";
+            });
+            b.addEventListener("mouseleave", function () { b.style.translate = ""; });
+          });
+          document.querySelectorAll(".x-card").forEach(function (c) {
+            c.addEventListener("mousemove", function (e) {
+              var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+              c.style.transform = "perspective(900px) rotateX(" + (-py * 8).toFixed(2) + "deg) rotateY(" + (px * 8).toFixed(2) + "deg) translateY(-6px)";
+            });
+            c.addEventListener("mouseleave", function () { c.style.transform = ""; });
+          });
+        }
+
+        if (!anim) document.querySelectorAll(".rv-img").forEach(function (el) { el.classList.add("is-in"); });
+        route();
+      })();
+    </script>
+  </body>
+</html>
